@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CircularProgress } from '@material-ui/core'
 
 import transformWeather from '../../services/transform-weather';
 import { api_weather } from '../../constants/api-url';
@@ -11,13 +12,12 @@ class WeatherLocation extends Component {
     super();
     this.state = {
       city: 'Cali',
-      data: {
-        temperature: 28,
-        weatherState: 'sun',
-        humidity: 10,
-        wind: '10 m/s'
-      }
+      data: null
     };
+  }
+
+  componentDidMount() {
+    this.handleUpdateClick();
   }
   
   handleUpdateClick = () => {
@@ -38,8 +38,9 @@ class WeatherLocation extends Component {
     return (
       <div className={'weatherLocationCont'}>
         <Location city={city} />
-        <WeatherData data={data} />
-        <button onClick={this.handleUpdateClick} >Actualizar</button>
+        {
+          data ? <WeatherData data={data} /> : <CircularProgress size={50} />
+        }
       </div>
     );
   }
