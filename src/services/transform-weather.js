@@ -31,7 +31,6 @@ const getWeatherState = weather => {
 }
 
 const transformWeather = weatherData => {
-  console.log('weatherData', weatherData);
   const { humidity, temp } = weatherData.main;
   const { speed } = weatherData.wind;
   const weatherState = getWeatherState(weatherData.weather[0]);

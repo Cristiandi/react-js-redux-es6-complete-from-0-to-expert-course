@@ -33,7 +33,7 @@ class WeatherLocation extends Component {
           throw new Error(message);
         }
         const newWeather = transformWeather(data);
-        console.log(newWeather);
+
         this.setState({
           data: newWeather
         });
@@ -42,9 +42,10 @@ class WeatherLocation extends Component {
   }
 
   render() {
+    const { onleWeatherLocationClick } = this.props;
     const { city, data } = this.state;
     return (
-      <div className={'weatherLocationCont'}>
+      <div className={'weatherLocationCont'} onClick={onleWeatherLocationClick}>
         <Location city={city} />
         {
           data ? <WeatherData data={data} /> : <CircularProgress size={50} />
@@ -55,7 +56,8 @@ class WeatherLocation extends Component {
 }
 
 WeatherLocation.propTypes = {
-  city: PropTypes.string.isRequired
+  city: PropTypes.string.isRequired,
+  onleWeatherLocationClick: PropTypes.func.isRequired
 }
 
 export default WeatherLocation;
