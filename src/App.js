@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { 
+  Paper,
+  AppBar,
+  Typography,
+  Toolbar } from '@material-ui/core';
 import { Grid, Col, Row } from 'react-flexbox-grid'
 import LocationList from './components/LocationList';
 import './App.css';
@@ -23,14 +28,20 @@ class App extends Component {
     return (
       <Grid>
         <Row>
-          Titulo
+          <AppBar position={'sticky'} >
+            <Toolbar>
+              <Typography variant={'title'} color={'inherit'} > Weather App </Typography>
+            </Toolbar>
+          </AppBar>
         </Row>
         <Row>
           <Col xs={12} md={6}>
             <LocationList cities={cities} onSelectedLocation={this.handleSelectedLocation} />
           </Col>
           <Col xs={12} md={6}>
-            <div className={'details'} ></div>
+            <Paper elevation={4}>
+              <div className={'details'} ></div>
+            </Paper>
           </Col>
         </Row>
       </Grid>
