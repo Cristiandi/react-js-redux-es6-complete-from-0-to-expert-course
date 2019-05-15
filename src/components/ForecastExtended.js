@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ForecastItem from './ForecastItem';
 import './styles.css';
 import { api_key, url_base_weather } from '../constants/api-url';
+import transformForecast from '../services/transform-forecast';
+import sharedInstance from 'jss';
 
 const days = [ 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes' ];
 const data = {
@@ -23,11 +25,16 @@ class ForecastExtended extends Component {
 
     fetch(url_forecast)
       .then(data => data.json())
-      .then(weatherData => console.log('weatherData', weatherData));
+      .then(weatherData => {
+        console.log('weatherData', weatherData);
+        const forecastData = transformForecast(weatherData);
+        this.setState({ forecastData });
+      });
   }
 
   renderForecastItemDays() {
-    return days.map(day => (<ForecastItem weekDay={day} hour={10} data={data}/>));
+    return <h1>Render items</h1>
+    // return days.map(day => (<ForecastItem weekDay={day} hour={10} data={data}/>));
   }
 
   renderProgress() {
