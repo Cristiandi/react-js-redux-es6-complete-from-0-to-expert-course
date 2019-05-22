@@ -20,10 +20,12 @@ class ForecastExtended extends Component {
     this.state = { forecastData: null };
   }
   
+  // se ejecuta solo la primera vez
   componentDidMount() {
     this.updateCity(this.props.city);
   }
 
+  // se ejecuta siempre exepto la primer vez
   componentWillReceiveProps(nextProps) {
     if (nextProps.city !== this.props.city) {
       this.setState({ forecastData: null });
