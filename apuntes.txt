@@ -1,0 +1,100 @@
+React 16
+-Los componentes del tipo clase dan mas potencialidades que los componentes del tipo funcion, en este 
+tipo de componentes va existir al menos un metodo llamado render, esto es lo minimo que debe poseer
+un componente para funcionar correctamente.
+-Cada componente tiene direferentes de ciclo de vida que se pueden sobre escribir, algunso son muy
+utilizados mientras que otros son solo utilizados en casos muy especificos.
+
+Como se pueden comunicar los componentes
+- burbujeo de acciones
+  se pasan funciones entre componentes para estimular el cambio de estado del componente deseado
+- mediante la url
+  un componente podria alterar la url y el componente deseado puede estar reactivo al cambio de url
+  no existe una comunicación directa entre componentes, pero el componente a genera un cambio en la
+  url que el componente b puede escuchar.
+- usando redux
+  mediante el uso del estado de la aplicación
+
+Fases del componente:
+- Montaje:
+  - constructor.
+    es el primero en ser llamado por react, sucede antes de que se monete el componente, se debe
+    utilizar solo en algunos casos especificos, por ejemplo, la inicialización del estado local 
+    del componente
+  - render.
+    este es el unico metodo requerido, sirve para generar los elementos de react que van a ser
+    generados en pantalla, esmuy importante que esta sea una función pura y no actualice o 
+    modifique el estado de ninguna manera, debe de ser liviano, que solo se encargue de la 
+    parte visual.
+  - getDerivedStateFromProps. (react 16)
+  - componentDidMount.
+    es incovado luego de que el componente es insertado en el arbol de componentes del DOM, este es
+    el punto ideal si se quiere realizar alguna petición al servidor, para que retorne datos que se
+    quieran mostrar en el componente.
+- Actualización:
+  - render.
+  - componentDidUpdate.
+    es invocado inmediatamente despues de que ocurre la actualización, nos permite comparar los
+    valores de las propiedades antes y despues de la actualización y realizar un petición al server
+    en función de estos valores.
+  - getDerivedStateFromProps. (react 16)
+  - shouldComponentUpdate.
+    no es uno de los metodos más comunes y se utiliza para lograr mejorar la eficiencia del componente
+    pero solo debe utilizarce en casos muy particulares.
+  - getSnapshotBeforeUpdate. (react 16)
+- Desmontaje
+  - componentWillUnmount
+    aquí se pueden realizar tareas de limpieza, invalidar timers, cancelar peticiones al server o 
+    eliminar alguna subcripción que se haya hecho en el componentDidMount.
+Alternativamente:
+- Manejo de errores
+  Solo se ejecuta cuando sucede algun problema en el render del componente, o algun error en alguno
+  de los metodos del ciclo de vida del mismo, o en el constructor de alguno de sus componentes hijos.
+
+UNSAFE METHODS
+- componentWillMount
+- componentWillUpdate
+- componentWillReciveProps
+
+Estos metodos quedaran deprecados con react 17
+
+¿que es lo que hace que un componente se actualice / re render?
+- ejecución del setState.
+- se establece un nuevo estado. 
+- desde un componente padre se modifican las propiedades.
+- se ejecuta el forceUpdate
+
+Virtual DOM
+El navrgador mantiene una representación de los elementros visuales que se mantienen en la pagina, esta
+estructura se denomina Document Object Model (DOM)
+Alterar el DOM real es una tarea costosa en tiempo y de porco rendimiento
+Reat logra ser eficiente mediante la utilización del Virtual DOM, lo que quiere decir que mantiene en 
+memoria una representación ligera de cada uno de los componentes generados y ante cada modificación
+ejecuta una comparacion y determina los cambios que existieron e impacta solo los cambios finalmente
+en el DOM real haciendo esto tan eficiente como pudiera ser
+
+ONE WAY DATA FLOW
+Se trata del flujo de datos dentro de la gerarquia de componentes de react prosee una unica dirección
+en sentido desendente, desde los componentes padres hacia los componentes hijos, es por este motivo
+que a este flujo de información se le conoce como ONE WAY DATA FLOW (Los componentes padres, pasan
+propiedades los componentes hijos y su vez los hijos a sus hijos, los hijos nunca se comunican en
+forma directa con los padres)
+
+Proceso de reconciliación
+Comparar dos arboles de componentes es una labor compleja para react, por eso se deben cumplir con
+ciertos principios:
+- Dos elementos o nodos de diferente tipo produciran arboles diferentes.
+- Cuando existieran elementos hijos del mismo tipo, el desarrollador puede proveer una clave (key)
+para indicar elementos permancen estables entre diferentes renderizaciones.
+Quiere decir que el proceso o mecanismo de reconciliación tiene en cuenta los anteriores principios
+para realizar la comparacion de los arboles de componentes y decidir en esa midida, cual es la
+mejor manera de renderizar los cambios (si es que los hay)
+es importante tener en cuenta que no se debe utilizar keys aleatorias o el número de indice ya 
+que el rendimiento podria ser inferior al esperado y ocacionar algunos inconvenientes
+
+En la versión 16 se realizo todo un nuevo refactor de React Fiber su motor de re renderizaciones
+
+REDUX
+Es una libreria JS para manejar el estado de la aplicación, un axioma en el que se basa redux:
+- es que el estado es unico y global (store).
+- el estado se modifica mediante acciones (actions)
