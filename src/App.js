@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { 
   Paper,
   AppBar,
@@ -8,7 +10,6 @@ import { Grid, Col, Row } from 'react-flexbox-grid';
 import LocationList from './components/LocationList';
 import ForecastExtended from './components/ForecastExtended';
 import { setCity } from './actions';
-import { store } from './store';
 
 import './App.css';
 
@@ -37,8 +38,7 @@ class App extends Component {
     console.log('====================================');
     console.log('handleSelectionLocation', city);
     console.log('====================================');
-    
-    store.dispatch(setCity(city));
+    this.props.setCity(city);
   }
   render() {
     const { city } = this.state;
@@ -70,4 +70,12 @@ class App extends Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  setCity: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = dispatch => ({
+  setCity: value => dispatch(setCity(value))
+});
+
+export default connect(null, mapDispatchToProps)(App);

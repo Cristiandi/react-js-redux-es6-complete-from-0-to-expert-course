@@ -98,3 +98,14 @@ REDUX
 Es una libreria JS para manejar el estado de la aplicación, un axioma en el que se basa redux:
 - es que el estado es unico y global (store).
 - el estado se modifica mediante acciones (actions)
+
+- connect (react-redux)
+es una funcion la cual me sirve para conectar a redux con react, es una funcion que recibe como 
+parametro dos funciones y esta funcion retorna una funcion
+
+- highOrderComponents
+son funciones que toman como paramertro un componente y retornan otro con alguna mejorar o 
+modificación, se utilizan mas que nada para solucionar aspectos transversales de la app
+
+- mapDispatchToProps
+sirve para mapear las acciones como propiedades en el componente
