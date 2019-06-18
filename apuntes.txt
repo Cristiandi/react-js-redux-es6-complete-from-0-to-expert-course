@@ -109,3 +109,24 @@ modificación, se utilizan mas que nada para solucionar aspectos transversales d
 
 - mapDispatchToProps
 sirve para mapear las acciones como propiedades en el componente
+
+- Containers components
+Son componentes que tienen acceso al estado de la aplicación con el connect, un container 
+sera entonces un componente que tiene connect
+
+- Presentational components
+Estan con el objetivo de realizar un renderizado en la app, solamente contienen logica de 
+presentacion
+
+Cuanto más clara haga la división entre containers y Presentational components más claro me va a
+querar el manejo de estado.
+Tambien se recomienda que los componentes que se encuentren muy aninados no sean tratados como
+containers.
+Generar la cantidad minima e indispensable de containers  y no generar renderización en los mismos
+(no UI).
+
+- El estado de la aplicación se maneja por el store y los reducers
+
+- Pure functions (reducers)
+No debe interferir nada más en el contexto de la función, no alterar el estado, mejor, generar una
+copia 
