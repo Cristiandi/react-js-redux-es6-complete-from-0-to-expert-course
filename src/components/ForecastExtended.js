@@ -1,79 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ForecastItem from './ForecastItem';
 import './styles.css';
-import { api_key, url_base_weather } from '../constants/api-url';
-import transformForecast from '../services/transform-forecast';
-import sharedInstance from 'jss';
 
-const days = [ 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes' ];
-const data = {
-  temperature: 10,
-  weatherState: 'sun',
-  humidity: 10,
-  wind: 'normal'
-};
+const renderForecastItemDays = forecastData => {
+  return forecastData.map(forecast => (
+      <ForecastItem key={`${forecast.weekDay}${forecast.hour}`}
+                    weekDay={forecast.weekDay} hour={forecast.hour}
+                    data={forecast.data} />
+  ));
+}
 
-class ForecastExtended extends Component {  
-  constructor() {
-    super();
-    this.state = { forecastData: null };
-  }
-  
-  // se ejecuta solo la primera vez
-  componentDidMount() {
-    this.updateCity(this.props.city);
-  }
+const renderProgress = () => {
+  return  <h3>Cargando pronostico extendido...</h3>;
+}
 
-  // se ejecuta siempre exepto la primer vez
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.city !== this.props.city) {
-      this.setState({ forecastData: null });
-      this.updateCity(nextProps.city);
-    }
-  }
-
-  updateCity = city => {
-    const url_forecast = `${url_base_weather}forecast?q=${city}&appid=${api_key}`;
-
-    fetch(url_forecast)
-      .then(data => data.json())
-      .then(weatherData => {
-        console.log('weatherData', weatherData);
-        const forecastData = transformForecast(weatherData);
-        console.log('forecastData', forecastData);
-        this.setState({ forecastData });
-      });
-  }
-
-  renderForecastItemDays(forecastData) {
-    return forecastData.map(forecast => (
-        <ForecastItem key={`${forecast.weekDay}${forecast.hour}`}
-                      weekDay={forecast.weekDay} hour={forecast.hour}
-                      data={forecast.data} />
-    ));
-  }
-
-  renderProgress() {
-    return  <h3>Cargando pronostico extendido...</h3>;
-  }
-
-  render() {
-    const { city } = this.props;
-    const { forecastData } = this.state;
-    return (
-      <div>
+const ForecastExtended = ({ city, forecastData }) => ( 
+    <div>
         <h2 className={'forecast-title '}>Pronóstico extendido de {city}</h2>
         {
           forecastData ?
-            this.renderForecastItemDays(forecastData)
+            renderForecastItemDays(forecastData)
           :
-            this.renderProgress()
+            renderProgress()
         }
-      </div>
-    );
-  }
-}
+    </div>
+);
 
 
 ForecastExtended.propTypes = {
