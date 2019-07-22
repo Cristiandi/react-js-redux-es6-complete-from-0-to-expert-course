@@ -130,3 +130,13 @@ Generar la cantidad minima e indispensable de containers  y no generar renderiza
 - Pure functions (reducers)
 No debe interferir nada más en el contexto de la función, no alterar el estado, mejor, generar una
 copia 
+
+- Selectores (redux)
+Es una estrategia/patron/herramiente que me permite hacer una selección de una parte del estado:
+  - son eficientes debido a que no se ejecutan si ninguno de sus parametros se modifica.
+  - permitén composicón, nuevos selectores pueden tomar como entrada otros selectores.
+  - pueden minimizar el tamaño del store, ya que estos pueden crear datos procesados calculandolos
+  en vez de tener que almacenarlos.
+- Memoization en los selectores
+técnica de optimización que permite mejorar la velocidad de ejecución guardando valores que son 
+resultado de calculos (complejos) utiliza más memoria.

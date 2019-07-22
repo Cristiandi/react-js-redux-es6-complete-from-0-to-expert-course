@@ -1,24 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgress } from '@material-ui/core'
 
-import transformWeather from '../../services/transform-weather';
-import getUrlWeatherByCity from '../../services/get-url-weather-by-city';
 import Location from './Location';
 import WeatherData from './WeatherData';
 import './styles.css';
 
-class WeatherLocation extends Component {
-  constructor(props) {
-    super(props);
-    const { city } = props;
-
-    this.state = {
-      city,
-      data: null
-    };
-  }
-
+/*
   componentDidMount() {
     this.handleUpdateClick();
   }
@@ -40,24 +28,26 @@ class WeatherLocation extends Component {
       })
       .catch(err => { throw err; });
   }
+ */
 
-  render() {
-    const { onleWeatherLocationClick } = this.props;
-    const { city, data } = this.state;
-    return (
-      <div className={'weatherLocationCont'} onClick={onleWeatherLocationClick}>
-        <Location city={city} />
-        {
-          data ? <WeatherData data={data} /> : <CircularProgress size={50} />
-        }
-      </div>
-    );
-  }
-}
+const WeatherLocation = ({ onWeatherLocationClick, city, data }) =>  (
+  <div className={'weatherLocationCont'} onClick={onWeatherLocationClick}>
+    <Location city={city} />
+    {
+      data ? <WeatherData data={data} /> : <CircularProgress size={50} />
+    }
+  </div>
+);
 
 WeatherLocation.propTypes = {
-  city: PropTypes.string.isRequired,
-  onleWeatherLocationClick: PropTypes.func.isRequired
+  city: PropTypes.string,
+  onleWeatherLocationClick: PropTypes.func,
+  data: PropTypes.shape({
+    temperature: PropTypes.number.isRequired,
+    weatherState: PropTypes.string.isRequired,
+    humidity: PropTypes.number.isRequired,
+    wind: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default WeatherLocation;
